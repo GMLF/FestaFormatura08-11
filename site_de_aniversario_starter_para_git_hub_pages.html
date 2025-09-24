@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🎉 Aniversário de <SEU_NOME></title>
+  <meta name="description" content="Convite digital de aniversário com RSVP e mural de mensagens." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b12; --card:#12121a; --muted:#a1a1b0; --text:#f6f7fb; --acc:#7c5cff; --acc2:#46d3a2; --danger:#ff6b6b;
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      background: url("niver.jpg") repeat fixed;  /* sua imagem de fundo */
+      background-size: contain;                   /* mantém proporção da foto */
+      color:var(--text)
+    }
+    a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+    .container{max-width:1000px;margin:0 auto;padding:24px}
+    header{position:sticky;top:0;background:rgba(11,11,18,.7);backdrop-filter:blur(10px);z-index:10;border-bottom:1px solid #1e1e2b}
+    .nav{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .nav a{padding:10px 14px;border-radius:10px;display:inline-block}
+    .btn{background:var(--acc);color:white;padding:12px 16px;border-radius:12px;border:none;font-weight:600;cursor:pointer}
+    .btn.ghost{background:#1a1a26}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 0}
+    .card{background:var(--card);border:1px solid #1e1e2b;padding:22px;border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .tag{display:inline-flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 10px;border-radius:999px;color:var(--muted);font-size:12px}
+    h1{font-size:40px;margin:12px 0 6px}
+    h2{font-size:28px;margin:0 0 12px}
+    p{color:#d7d8e3;line-height:1.6}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .two{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .list{display:grid;gap:10px}
+    .muted{color:var(--muted)}
+    .countdown{font-size:28px;font-weight:800;letter-spacing:.5px}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a26;border:1px solid #24243a;border-radius:12px}
+    .footer{padding:40px 0;color:#a7a8b9;text-align:center}
+    .map{width:100%;height:320px;border:0;border-radius:16px}
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .gallery img{width:100%;height:160px;object-fit:cover;border-radius:12px;border:1px solid #24243a}
+    .small{font-size:13px}
+    .full { grid-column: span 3; }
+    /* Form mural */
+    .field{display:flex;flex-direction:column;gap:6px}
+    .input, .textarea{
+      padding:12px 14px;border-radius:12px;border:1px solid #34344d;background:#12121a;color:#eaeaf7
+    }
+    .textarea{min-height:90px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 150px;gap:8px}
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+      .two{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .row{grid-template-columns:1fr}
+    }
+    .msg-card{
+      border:1px solid #24243a;background:#1a1a26;border-radius:12px;padding:12px 14px
+    }
+    .msg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .name{font-weight:700}
+    .date{color:var(--muted);font-size:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div style="display:flex;gap:12px;align-items:center">
+        <span class="pill">🎉 <strong>Aniver do <span id="owner">SEU_NOME</span></strong></span>
+      </div>
+      <nav style="display:flex;gap:6px;flex-wrap:wrap">
+        <a href="#detalhes">Detalhes</a>
+        <a href="#rsvp">RSVP</a>
+        <a href="#mural">Mural</a>
+        <a href="#local">Local</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card">
+        <span class="tag">Convite oficial</span>
+        <h1>Você está convidado! 🥳</h1>
+        <p>Vem comemorar o aniversário de <strong id="name">SEU_NOME</strong> com a gente! Será no dia <strong id="date">12 de outubro de 2025</strong>, às <strong id="time">16:00</strong>.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <button class="btn" onclick="document.querySelector('#rsvp').scrollIntoView({behavior:'smooth'})">Confirmar presença</button>
+          <button class="btn.ghost" onclick="document.querySelector('#mural').scrollIntoView({behavior:'smooth'})">Deixar mensagem</button>
+        </div>
+        <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <span class="muted">Faltam:</span>
+          <span class="countdown" id="countdown">—</span>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/hero.jpg" alt="Imagem destaque" style="width:100%;border-radius:16px;border:1px solid #24243a"/>
+        <p class="small muted" style="margin-top:8px">Dica: troque a imagem em <code>assets/hero.jpg</code>.</p>
+      </div>
+    </section>
+
+    <!-- DETALHES -->
+    <section id="detalhes" class="grid">
+      <div class="card full">
+        <h2>📅 Detalhes</h2>
+        <p><strong>Data:</strong> <span id="date2">12/10/2025</span> às <span id="time2">16:00</span></p>
+        <p><strong>Endereço:</strong> Rua Exemplo, 123 – Bairro, Cidade/UF</p>
+        <p class="muted small">Traje: esporte fino; terá docinhos 😋</p>
+      </div>
+      <div class="card full">
+        <h2>🧾 Informações Úteis</h2>
+        <ul class="small muted" style="margin:0;padding-left:18px;line-height:1.8">
+          <li>Estacionamento nas ruas próximas</li>
+          <li>Traga sua melhor energia 💜</li>
+          <li>Confirme presença até <strong>05/10</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- RSVP + MURAL (localStorage) -->
+    <section id="rsvp" class="two" style="margin-top:20px">
+      <div class="card">
+        <h2>📨 Confirmação de Presença (RSVP)</h2>
+        <div style="aspect-ratio:16/10;background:#0f0f17;border:1px solid #24243a;border-radius:16px;overflow:hidden">
+          <iframe title="RSVP" src="https://docs.google.com/forms/d/e/1FAIpQLSd-placeholder/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>
+        </div>
+      </div>
+
+      <div id="mural" class="card">
+        <h2>💌 Mural de Mensagens</h2>
+        <p class="small muted" style="margin-top:-6px">Deixe uma mensagem fofa para o aniversariante 💖</p>
+
+        <!-- Lista de mensagens (localStorage) -->
+        <div class="list" id="wall" style="margin-bottom:12px"></div>
+
+        <!-- Form de nome + mensagem -->
+        <div class="list" style="gap:12px">
+          <div class="field">
+            <label for="wallName" class="small muted">Seu nome</label>
+            <input id="wallName" class="input" placeholder="Ex.: Ana Souza" maxlength="80" />
+          </div>
+          <div class="field">
+            <label for="wallInput" class="small muted">Mensagem</label>
+            <textarea id="wallInput" class="textarea" placeholder="Escreva sua mensagem..." maxlength="800"></textarea>
+          </div>
+          <div class="row">
+            <span class="small muted" id="statusHint">Campos obrigatórios: nome e mensagem.</span>
+            <button class="btn" onclick="addMsg()">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMENTÁRIOS PERSISTENTES (Utterances) -->
+    <section class="card" style="margin-top:20px">
+      <h2>🗒️ Comentários persistentes</h2>
+      <p class="small muted">Este bloco salva os comentários no GitHub (visíveis para todos).</p>
+      <div id="utterances"></div>
+    </section>
+    <script src="https://utteranc.es/client.js"
+            repo="GMLF/nivergi"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+
+    <!-- LOCAL -->
+    <section id="local" class="two" style="margin-top:20px">
+      <div class="card">
+        <h2>📍 Local</h2>
+        <p><strong>Espaço Festa</strong><br/>Rua Exemplo, 123 – Bairro – Cidade/UF</p>
+        <p class="muted small">Clique para abrir no Maps</p>
+        <a class="btn" target="_blank" rel="noopener" href="https://maps.google.com/?q=Rua%20Exemplo%2C%20123%20Cidade%20UF">Abrir no Google Maps</a>
+      </div>
+      <div class="card">
+        <iframe class="map" loading="lazy" allowfullscreen
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.859376!2d-46.648!3d-23.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z!5e0!3m2!1spt-BR!2sBR!4v0000000000"></iframe>
+      </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section style="margin-top:20px">
+      <div class="card">
+        <h2>📸 Galeria</h2>
+        <div class="gallery">
+          <img src="assets/foto1.jpg" alt="Foto 1"/>
+          <img src="assets/foto2.jpg" alt="Foto 2"/>
+          <img src="assets/foto3.jpg" alt="Foto 3"/>
+          <img src="assets/foto4.jpg" alt="Foto 4"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section style="margin-top:20px" id="faq">
+      <div class="card">
+        <h2>❓ Dúvidas Frequentes</h2>
+        <details>
+          <summary>Posso levar acompanhante?</summary>
+          <p class="muted">Claro! Só lembra de informar no RSVP.</p>
+        </details>
+        <details>
+          <summary>Terá estacionamento?</summary>
+          <p class="muted">Há vagas livres nas ruas próximas.</p>
+        </details>
+        <details>
+          <summary>Qual o traje?</summary>
+          <p class="muted">Esporte fino.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="footer">
+      Feito com ❤️ e hospedado no GitHub Pages · © <span id="year"></span>
+    </section>
+  </main>
+
+  <script>
+    // ====== CONFIG RÁPIDA ======
+    const EVENT_DATE = new Date('2025-10-12T16:00:00-03:00');
+    const NAME = 'SEU_NOME';
+
+    // ====== TEXTO BASE ======
+    document.getElementById('owner').textContent = NAME;
+    document.getElementById('name').textContent = NAME;
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('date').textContent = EVENT_DATE.toLocaleDateString('pt-BR', { dateStyle:'long' });
+    document.getElementById('time').textContent = EVENT_DATE.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+    document.getElementById('date2').textContent = EVENT_DATE.toLocaleDateString('pt-BR');
+    document.getElementById('time2').textContent = EVENT_DATE.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+
+    // ====== COUNTDOWN ======
+    const cEl = document.getElementById('countdown');
+    function tick(){
+      const now = new Date();
+      const ms = EVENT_DATE - now;
+      if(ms <= 0){ cEl.textContent = 'É hoje! 🎉'; return; }
+      const d = Math.floor(ms/86400000);
+      const h = Math.floor((ms%86400000)/3600000);
+      const m = Math.floor((ms%3600000)/60000);
+      cEl.textContent = `${d}d ${h}h ${m}m`;
+      requestAnimationFrame(()=>setTimeout(tick, 1000));
+    }
+    tick();
+
+    // ====== MURAL (localStorage – funciona mesmo sem backend) ======
+    const STORAGE_KEY = 'mural_msgs_v1';
+    const wall = document.getElementById('wall');
+    const inputMsg = document.getElementById('wallInput');
+    const inputName = document.getElementById('wallName');
+    const statusHint = document.getElementById('statusHint');
+
+    function escapeHtml(s){
+      return s.replace(/[&<>"]/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[m]));
+    }
+
+    function loadMessages(){
+      try{
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        return Array.isArray(data) ? data : [];
+      }catch(e){ return []; }
+    }
+
+    function saveMessages(arr){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    function renderMessages(){
+      wall.innerHTML = '';
+      const data = loadMessages();
+      data.slice().reverse().forEach(msg => {
+        const wrap = document.createElement('div');
+        wrap.className = 'msg-card';
+        wrap.innerHTML = `
+          <div class="msg-header">
+            <span class="name">${escapeHtml(msg.name || 'Convidado')}</span>
+            <span class="date">${new Date(msg.when).toLocaleString('pt-BR')}</span>
+          </div>
+          <div>${escapeHtml(msg.text)}</div>
+        `;
+        wall.appendChild(wrap);
+      });
+    }
+
+    function addMsg(){
+      const name = (inputName.value || '').trim();
+      const text = (inputMsg.value || '').trim();
+
+      if(!name || !text){
+        statusHint.textContent = 'Por favor, preencha seu nome e sua mensagem ❤️';
+        statusHint.style.color = 'var(--danger)';
+        return;
+      }
+
+      const entry = { name, text, when: Date.now() };
+      const data = loadMessages();
+      if(data.length > 500){ data.shift(); } // limite simples
+
+      data.push(entry);
+      saveMessages(data);
+      inputMsg.value = '';
+      statusHint.textContent = 'Mensagem enviada! Obrigado 💌';
+      statusHint.style.color = 'var(--acc2)';
+      renderMessages();
+    }
+
+    window.addMsg = addMsg;
+    renderMessages();
+  </script>
+</body>
+</html>
