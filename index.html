@@ -24,11 +24,12 @@
     }
     a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
     .container{max-width:1000px;margin:0 auto;padding:24px}
-    header{position:sticky;top:0;background:rgba(11,11,18,.7);backdrop-filter:blur(10px);z-index:10;border-bottom:1px solid #1e1e2b}
-    .nav{display:flex;gap:12px;align-items:center;justify-content:space-between}
-    .nav a{padding:10px 14px;border-radius:10px;display:inline-block}
+    header{position:sticky;top:0;background:rgba(11,11,18,.7);backdrop-filter:blur(10px);z-index:20;border-bottom:1px solid #1e1e2b}
+
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a26;border:1px solid #24243a;border-radius:12px}
     .btn{background:var(--acc);color:white;padding:12px 16px;border-radius:12px;border:none;font-weight:600;cursor:pointer}
     .btn.ghost{background:#1a1a26}
+
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 0}
     .card{background:var(--card);border:1px solid #1e1e2b;padding:22px;border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.25)}
     .tag{display:inline-flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 10px;border-radius:999px;color:var(--muted);font-size:12px}
@@ -41,10 +42,31 @@
     .small{font-size:13px}
     .muted{color:var(--muted)}
 
-    /* Slideshow (galeria automática) — aumentado e sem corte */
+    /* NAV responsiva */
+    .nav{display:flex;gap:12px;align-items:center;justify-content:space-between; position:relative}
+    .menu-toggle{
+      display:none;
+      background:#1a1a26; color:#f6f7fb; border:1px solid #24243a;
+      padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer;
+    }
+    .nav-menu{ display:flex; gap:6px; align-items:center; }
+    .nav-menu a{ padding:10px 14px; border-radius:10px; display:inline-block; }
+
+    @media (max-width: 820px){
+      .nav-menu{
+        position:absolute; top:64px; right:12px; left:12px;
+        background:rgba(11,11,18,.92); backdrop-filter:blur(8px);
+        border:1px solid #24243a; border-radius:12px; padding:10px;
+        display:none; flex-direction:column; gap:4px; z-index:25;
+      }
+      .nav-menu.open{ display:flex; }
+      .menu-toggle{ display:inline-flex; align-items:center; gap:8px; }
+    }
+
+    /* Slideshow — aumentado e sem corte */
     .slideshow{
       position:relative;
-      height:520px; /* ↑ mais alto para caber as fotos */
+      height:520px;
       border-radius:16px;
       overflow:hidden;
       border:1px solid #24243a;
@@ -53,13 +75,13 @@
     .slideshow img{
       position:absolute; inset:0;
       width:100%; height:100%;
-      object-fit:contain;     /* não corta a imagem */
-      background:#0f0f17;     /* fundo atrás da foto */
+      object-fit:contain;
+      background:#0f0f17;
       opacity:0; transition:opacity .8s ease;
     }
     .slideshow img.active{opacity:1}
 
-    /* Estilos para o mural local (fallback) */
+    /* Fallback mural local */
     .field{display:flex;flex-direction:column;gap:6px}
     .input, .textarea{
       padding:12px 14px;border-radius:12px;border:1px solid #34344d;background:#12121a;color:#eaeaf7
@@ -71,10 +93,33 @@
     .name{font-weight:700}
     .date{color:var(--muted);font-size:12px}
 
+    /* Controle de música + nudge */
+    .music-ctrl{
+      position:fixed; right:16px; bottom:16px;
+      display:flex; gap:8px; align-items:center;
+      background:#1a1a26; border:1px solid #24243a; color:#eaeaf7;
+      padding:10px 12px; border-radius:12px; z-index:30;
+      box-shadow:0 8px 20px rgba(0,0,0,.35);
+    }
+    .music-ctrl button{
+      background:var(--acc); color:white; border:none; border-radius:10px;
+      padding:8px 12px; font-weight:700; cursor:pointer;
+    }
+    .nudge{
+      position:fixed; inset:auto 0 0 0; margin:auto; bottom:0;
+      width:100%; max-width:460px;
+      transform:translateY(120%);
+      left:0; right:0;
+      background:#1a1a26; color:#eaeaf7; border:1px solid #24243a;
+      padding:10px 14px; border-radius:12px 12px 0 0; z-index:29;
+      text-align:center; transition:transform .4s ease;
+    }
+    .nudge.show{ transform:translateY(0); }
+
     @media (max-width: 960px){
       .hero{grid-template-columns:1fr}
       .two{grid-template-columns:1fr}
-      .slideshow{height:360px} /* ↑ maior no mobile também */
+      .slideshow{height:360px}
       .row{grid-template-columns:1fr}
     }
   </style>
@@ -85,7 +130,12 @@
       <div style="display:flex;gap:12px;align-items:center">
         <span class="pill">🎉 <strong>Aniver da <span id="owner">Giovana de Aquino Magalhães</span></strong></span>
       </div>
-      <nav style="display:flex;gap:6px;flex-wrap:wrap">
+
+      <!-- Botão hamburguer (mobile) -->
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navMenu">☰ Menu</button>
+
+      <!-- Links de navegação -->
+      <nav id="navMenu" class="nav-menu">
         <a href="#rsvp">RSVP</a>
         <a href="#mural">Mural</a>
         <a href="#local">Local</a>
@@ -114,23 +164,21 @@
       </div>
     </section>
 
-    <!-- RSVP (sozinho) -->
+    <!-- RSVP -->
     <section id="rsvp" class="card" style="margin-top:20px">
       <h2>📨 Confirmação de Presença (RSVP)</h2>
       <div style="aspect-ratio:16/10;background:#0f0f17;border:1px solid #24243a;border-radius:16px;overflow:hidden">
-        <!-- Troque o src pelo link embutido do seu formulário -->
         <iframe title="RSVP" src="https://docs.google.com/forms/d/e/1FAIpQLSd-placeholder/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>
       </div>
     </section>
 
-    <!-- MURAL (Utterances + fallback automático local) -->
+    <!-- MURAL -->
     <section id="mural" class="card" style="margin-top:20px">
       <h2>💌 Mural de Mensagens</h2>
       <p class="small muted" style="margin-top:-6px">
         As mensagens abaixo ficam salvas no GitHub (visíveis para todos). É necessário estar logado no GitHub para comentar.
       </p>
 
-      <!-- Utterances (persistente no GitHub) -->
       <div id="utterances"></div>
       <script src="https://utteranc.es/client.js"
               repo="GMLF/FestaFormatura08-11"
@@ -140,7 +188,6 @@
               async>
       </script>
 
-      <!-- Fallback: ativa mural local se o Utterances não carregar -->
       <div id="localWall" style="display:none;margin-top:16px">
         <p class="small muted" style="margin-top:-6px">
           ⚠️ Não foi possível carregar o mural do GitHub agora. Deixe sua mensagem aqui; ela ficará salva no seu navegador.
@@ -163,7 +210,7 @@
       </div>
     </section>
 
-    <!-- LOCAL (com endereço e mapa) -->
+    <!-- LOCAL -->
     <section id="local" class="two" style="margin-top:20px">
       <div class="card">
         <h2>📍 Local</h2>
@@ -176,7 +223,7 @@
       </div>
     </section>
 
-    <!-- GALERIA (slideshow automático) -->
+    <!-- GALERIA -->
     <section style="margin-top:20px">
       <div class="card">
         <h2>📸 Galeria</h2>
@@ -209,10 +256,21 @@
     </section>
   </main>
 
+  <!-- Áudio local oculto -->
+  <audio id="bgAudio" src="niver.mp3" preload="auto" loop></audio>
+
+  <!-- Controle de música (flutuante) -->
+  <div class="music-ctrl" id="musicCtrl" style="display:none">
+    <span id="musicState" class="small muted">carregando música…</span>
+    <button id="musicToggle" type="button">🔊 Tocar</button>
+  </div>
+  <!-- “Nudge” sutil para liberar áudio quando bloqueado -->
+  <div id="audioNudge" class="nudge">🔈 Toque em qualquer lugar para ativar o som</div>
+
   <script>
-    // ====== CONFIG ======
+    // ====== CONFIG BÁSICA ======
     const NAME = 'Giovana de Aquino Magalhães';
-    const EVENT_DATE = new Date('2025-11-08T20:00:00-03:00'); // 08/11/2025 20h
+    const EVENT_DATE = new Date('2025-11-08T20:00:00-03:00');
     const ADDRESS = 'Av José Pereira de Andrade, 370 - Jardim Santa Maria, Jacareí - SP';
 
     // === GALERIA com 58 fotos (na pasta /img, nomes 1.jpg ... 58.jpg) ===
@@ -220,11 +278,26 @@
     const GALLERY = Array.from({length: NUM_FOTOS}, (_, i) => `img/${i+1}.jpg`);
     const SLIDE_INTERVAL_MS = 3000;
 
+    // ====== NAVBAR MOBILE ======
+    (function navMobile(){
+      const btn = document.getElementById('menuToggle');
+      const menu = document.getElementById('navMenu');
+      if(!btn || !menu) return;
+      btn.addEventListener('click', ()=>{
+        menu.classList.toggle('open');
+        const open = menu.classList.contains('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      // fecha ao clicar num link
+      menu.querySelectorAll('a').forEach(a=>{
+        a.addEventListener('click', ()=> menu.classList.remove('open'));
+      });
+    })();
+
     // ====== TEXTO BASE ======
     document.getElementById('owner').textContent = NAME;
     document.getElementById('name').textContent = NAME;
     document.getElementById('year').textContent = new Date().getFullYear();
-
     document.getElementById('date').textContent = EVENT_DATE.toLocaleDateString('pt-BR', { dateStyle:'long' });
     document.getElementById('time').textContent = EVENT_DATE.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
 
@@ -253,47 +326,27 @@
         `<strong>Espaço da Festa</strong><br/>${ADDRESS}`;
     })();
 
-    // ====== GALERIA (slideshow automático) ======
+    // ====== GALERIA ======
     (function initSlideshow(){
       const box = document.getElementById('slideshow');
       if(!box) return;
-
       let idx = 0;
       const slides = [];
-
-      function show(i){
-        slides.forEach((img, k)=> img.classList.toggle('active', k === i));
-      }
-
-      // carrega a primeira imagem e inicia
+      function show(i){ slides.forEach((img, k)=> img.classList.toggle('active', k === i)); }
       const first = new Image();
-      first.src = GALLERY[0];
-      first.alt = 'Foto 1';
-      first.loading = 'eager';
+      first.src = GALLERY[0]; first.alt = 'Foto 1'; first.loading = 'eager';
       first.onload = () => {
-        first.classList.add('active');
-        box.appendChild(first);
-        slides.push(first);
-
-        // injeta as demais (lazy)
+        first.classList.add('active'); box.appendChild(first); slides.push(first);
         for(let i=1;i<GALLERY.length;i++){
-          const img = new Image();
-          img.src = GALLERY[i];
-          img.alt = `Foto ${i+1}`;
-          img.loading = 'lazy';
-          box.appendChild(img);
-          slides.push(img);
+          const img = new Image(); img.src = GALLERY[i]; img.alt = `Foto ${i+1}`; img.loading = 'lazy';
+          box.appendChild(img); slides.push(img);
         }
-
-        setInterval(()=>{
-          idx = (idx + 1) % slides.length;
-          show(idx);
-        }, SLIDE_INTERVAL_MS);
+        setInterval(()=>{ idx = (idx + 1) % slides.length; show(idx); }, SLIDE_INTERVAL_MS);
       };
       first.onerror = () => { box.appendChild(first); };
     })();
 
-    // ====== Fallback automático do mural (localStorage) ======
+    // ====== Fallback do Mural ======
     setTimeout(()=>{
       const found = [...document.querySelectorAll('#mural iframe')]
         .some(f => (f.src||'').includes('utteranc.es'));
@@ -310,7 +363,6 @@
       const inputName = document.getElementById('wallName');
       const statusHint = document.getElementById('statusHint');
       const btn = document.getElementById('sendLocal');
-
       function escapeHtml(s){ return s.replace(/[&<>"]/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[m])); }
       function load(){ try{ const d=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); return Array.isArray(d)?d:[] }catch(e){ return [] } }
       function save(a){ localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
@@ -338,6 +390,66 @@
       };
       render();
     }
+
+    // ====== MÚSICA LOCAL (niver.mp4) ======
+    const audio   = document.getElementById('bgAudio');
+    const ctrl    = document.getElementById('musicCtrl');
+    const btnPlay = document.getElementById('musicToggle');
+    const label   = document.getElementById('musicState');
+    const nudge   = document.getElementById('audioNudge');
+
+    // Tenta iniciar em modo mudo (permitido pelos navegadores)
+    async function initAudio(){
+      try{
+        audio.volume = 1.0;
+        audio.muted = true;              // começa mudo para liberar autoplay
+        await audio.play();              // deve funcionar em desktop e mobile
+        ctrl.style.display = 'flex';
+        label.textContent = '🔇 mudo — toque para ativar';
+        btnPlay.textContent = '🔊 Tocar';
+        showNudge();                     // pede 1 toque para liberar som
+      }catch(e){
+        // Se até mudo for bloqueado, ainda mostramos o controle
+        ctrl.style.display = 'flex';
+        label.textContent = '🔇 bloqueado — toque para ativar';
+        btnPlay.textContent = '🔊 Tocar';
+        showNudge();
+      }
+    }
+    initAudio();
+
+    // Ao primeiro gesto do usuário, desmuta e toca com som
+    ['pointerdown','touchstart','keydown'].forEach(ev=>{
+      window.addEventListener(ev, oneTimeUnlock, { once:true, passive:true });
+    });
+    function oneTimeUnlock(){
+      try{
+        audio.muted = false;
+        audio.play();
+        label.textContent = '🎵 tocando';
+        btnPlay.textContent = '⏸ Pausar';
+        hideNudge();
+      }catch(_){}
+    }
+
+    // Botão do controle flutuante
+    btnPlay.addEventListener('click', ()=>{
+      if(audio.paused){
+        audio.muted = false;
+        audio.play().then(()=>{
+          label.textContent = '🎵 tocando';
+          btnPlay.textContent = '⏸ Pausar';
+          hideNudge();
+        }).catch(()=>{ /* ignora */ });
+      }else{
+        audio.pause();
+        label.textContent = '🔇 pausado';
+        btnPlay.textContent = '🔊 Tocar';
+      }
+    });
+
+    function showNudge(){ nudge.classList.add('show'); }
+    function hideNudge(){ nudge.classList.remove('show'); }
   </script>
 </body>
 </html>
