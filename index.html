@@ -29,6 +29,7 @@
     .pill{display:inline-flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a26;border:1px solid #24243a;border-radius:12px}
     .btn{background:var(--acc);color:white;padding:12px 16px;border-radius:12px;border:none;font-weight:600;cursor:pointer}
     .btn.ghost{background:#1a1a26}
+    .btn:disabled{background:#34344d;color:#a1a1b0;cursor:not-allowed}
 
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 0}
     .card{background:var(--card);border:1px solid #1e1e2b;padding:22px;border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.25)}
@@ -81,17 +82,19 @@
     }
     .slideshow img.active{opacity:1}
 
-    /* Fallback mural local */
+    /* Mural Google Sheets */
     .field{display:flex;flex-direction:column;gap:6px}
     .input, .textarea{
       padding:12px 14px;border-radius:12px;border:1px solid #34344d;background:#12121a;color:#eaeaf7
     }
     .textarea{min-height:90px;resize:vertical}
     .row{display:grid;grid-template-columns:1fr 150px;gap:8px}
-    .msg-card{border:1px solid #24243a;background:#1a1a26;border-radius:12px;padding:12px 14px}
+    .msg-card{border:1px solid #24243a;background:#1a1a26;border-radius:12px;padding:12px 14px;margin-bottom:12px}
     .msg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
     .name{font-weight:700}
     .date{color:var(--muted);font-size:12px}
+    .loading{text-align:center;padding:20px;color:var(--muted)}
+    .error{background:var(--danger);color:white;padding:10px;border-radius:8px;margin:10px 0}
 
     /* Controle de música + nudge */
     .music-ctrl{
@@ -172,41 +175,30 @@
       </div>
     </section>
 
-    <!-- MURAL -->
+    <!-- MURAL GOOGLE SHEETS -->
     <section id="mural" class="card" style="margin-top:20px">
       <h2>💌 Mural de Mensagens</h2>
       <p class="small muted" style="margin-top:-6px">
-        As mensagens abaixo ficam salvas no GitHub (visíveis para todos). É necessário estar logado no GitHub para comentar.
+        Deixe sua mensagem para a aniversariante! Todas as mensagens são salvas em uma planilha do Google.
       </p>
 
-      <div id="utterances"></div>
-      <script src="https://utteranc.es/client.js"
-              repo="GMLF/FestaFormatura08-11"
-              issue-term="pathname"
-              theme="github-dark"
-              crossorigin="anonymous"
-              async>
-      </script>
+      <!-- Área de mensagens -->
+      <div id="messagesContainer">
+        <div class="loading" id="loadingMessages">Carregando mensagens...</div>
+      </div>
 
-      <div id="localWall" style="display:none;margin-top:16px">
-        <p class="small muted" style="margin-top:-6px">
-          ⚠️ Não foi possível carregar o mural do GitHub agora. Deixe sua mensagem aqui; ela ficará salva no seu navegador.
-        </p>
-        <div class="list" id="wall" style="margin-bottom:12px"></div>
-        <div class="list" style="gap:12px">
-          <div class="field">
-            <label for="wallName" class="small muted">Seu nome</label>
-            <input id="wallName" class="input" placeholder="Ex.: Ana Souza" maxlength="80" />
-          </div>
-          <div class="field">
-            <label for="wallInput" class="small muted">Mensagem</label>
-            <textarea id="wallInput" class="textarea" placeholder="Escreva sua mensagem..." maxlength="800"></textarea>
-          </div>
-          <div class="row">
-            <span class="small muted" id="statusHint">Campos obrigatórios: nome e mensagem.</span>
-            <button class="btn" id="sendLocal">Enviar</button>
-          </div>
-        </div>
+      <!-- Formulário de envio -->
+      <div class="field" style="margin-top:20px">
+        <label for="messageName" class="small muted">Seu nome *</label>
+        <input id="messageName" class="input" placeholder="Ex.: Ana Souza" maxlength="80" />
+      </div>
+      <div class="field">
+        <label for="messageText" class="small muted">Sua mensagem *</label>
+        <textarea id="messageText" class="textarea" placeholder="Escreva sua mensagem de felicitações..." maxlength="800"></textarea>
+      </div>
+      <div class="row">
+        <span class="small muted" id="statusHint">Campos obrigatórios: nome e mensagem.</span>
+        <button class="btn" id="sendMessage" disabled>Enviar Mensagem</button>
       </div>
     </section>
 
@@ -264,7 +256,7 @@
     <span id="musicState" class="small muted">carregando música…</span>
     <button id="musicToggle" type="button">🔊 Tocar</button>
   </div>
-  <!-- “Nudge” sutil para liberar áudio quando bloqueado -->
+  <!-- "Nudge" sutil para liberar áudio quando bloqueado -->
   <div id="audioNudge" class="nudge">🔈 Toque em qualquer lugar para ativar o som</div>
 
   <script>
@@ -273,7 +265,11 @@
     const EVENT_DATE = new Date('2025-11-08T20:00:00-03:00');
     const ADDRESS = 'Av José Pereira de Andrade, 370 - Jardim Santa Maria, Jacareí - SP';
 
-    // === GALERIA com 58 fotos (na pasta /img, nomes 1.jpg ... 58.jpg) ===
+    // === CONFIGURAÇÃO GOOGLE SHEETS ===
+    // URL do Web App do Google Apps Script (substitua pelo seu)
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxY7Ih2HuPwJbqRyLV7dCcnakYsrKhh1vemVrmUG6xZ1HKHtDJUog7TjTmDqV3Da17O/exec';
+    
+    // === GALERIA com 58 fotos ===
     const NUM_FOTOS = 58;
     const GALLERY = Array.from({length: NUM_FOTOS}, (_, i) => `img/${i+1}.jpg`);
     const SLIDE_INTERVAL_MS = 3000;
@@ -346,50 +342,137 @@
       first.onerror = () => { box.appendChild(first); };
     })();
 
-    // ====== Fallback do Mural ======
-    setTimeout(()=>{
-      const found = [...document.querySelectorAll('#mural iframe')]
-        .some(f => (f.src||'').includes('utteranc.es'));
-      if(!found){
-        document.getElementById('localWall').style.display = 'block';
-        initLocalWall();
-      }
-    }, 6000);
-
-    function initLocalWall(){
-      const STORAGE_KEY = 'mural_msgs_v1';
-      const wall = document.getElementById('wall');
-      const inputMsg = document.getElementById('wallInput');
-      const inputName = document.getElementById('wallName');
+    // ====== MURAL GOOGLE SHEETS ======
+    (function initMural(){
+      const container = document.getElementById('messagesContainer');
+      const loadingEl = document.getElementById('loadingMessages');
+      const nameInput = document.getElementById('messageName');
+      const textInput = document.getElementById('messageText');
+      const sendBtn = document.getElementById('sendMessage');
       const statusHint = document.getElementById('statusHint');
-      const btn = document.getElementById('sendLocal');
-      function escapeHtml(s){ return s.replace(/[&<>"]/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[m])); }
-      function load(){ try{ const d=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); return Array.isArray(d)?d:[] }catch(e){ return [] } }
-      function save(a){ localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
-      function render(){
-        wall.innerHTML='';
-        load().slice().reverse().forEach(msg=>{
-          const wrap=document.createElement('div');
-          wrap.className='msg-card';
-          wrap.innerHTML = `
-            <div class="msg-header">
-              <span class="name">${escapeHtml(msg.name||'Convidado')}</span>
-              <span class="date">${new Date(msg.when).toLocaleString('pt-BR')}</span>
+
+      // Validação do formulário
+      function validateForm() {
+        const nameValid = nameInput.value.trim().length > 0;
+        const textValid = textInput.value.trim().length > 0;
+        sendBtn.disabled = !(nameValid && textValid);
+      }
+
+      nameInput.addEventListener('input', validateForm);
+      textInput.addEventListener('input', validateForm);
+
+      // Carregar mensagens
+      async function loadMessages() {
+        try {
+          loadingEl.textContent = 'Carregando mensagens...';
+          
+          const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getMessages`);
+          if (!response.ok) throw new Error('Erro ao carregar mensagens');
+          
+          const messages = await response.json();
+          
+          if (messages.length === 0) {
+            container.innerHTML = '<p class="muted">Nenhuma mensagem ainda. Seja o primeiro a deixar uma mensagem!</p>';
+            return;
+          }
+
+          // Ordenar por data (mais recentes primeiro)
+          messages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+          
+          container.innerHTML = messages.map(msg => `
+            <div class="msg-card">
+              <div class="msg-header">
+                <span class="name">${escapeHtml(msg.name)}</span>
+                <span class="date">${formatDate(msg.timestamp)}</span>
+              </div>
+              <div>${escapeHtml(msg.message)}</div>
             </div>
-            <div>${escapeHtml(msg.text)}</div>`;
-          wall.appendChild(wrap);
+          `).join('');
+          
+        } catch (error) {
+          console.error('Erro:', error);
+          container.innerHTML = '<div class="error">Erro ao carregar mensagens. Tente recarregar a página.</div>';
+        } finally {
+          loadingEl.style.display = 'none';
+        }
+      }
+
+      // Enviar mensagem
+      sendBtn.addEventListener('click', async () => {
+        const name = nameInput.value.trim();
+        const message = textInput.value.trim();
+
+        if (!name || !message) {
+          statusHint.textContent = 'Preencha nome e mensagem ❤️';
+          statusHint.style.color = 'var(--danger)';
+          return;
+        }
+
+        try {
+          sendBtn.disabled = true;
+          sendBtn.textContent = 'Enviando...';
+          statusHint.textContent = 'Enviando mensagem...';
+          statusHint.style.color = 'var(--muted)';
+
+          const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'addMessage',
+              name: name,
+              message: message
+            })
+          });
+
+          if (!response.ok) throw new Error('Erro ao enviar mensagem');
+
+          // Limpar formulário
+          nameInput.value = '';
+          textInput.value = '';
+          sendBtn.disabled = true;
+          
+          statusHint.textContent = 'Mensagem enviada com sucesso! 💌';
+          statusHint.style.color = 'var(--acc2)';
+
+          // Recarregar mensagens
+          await loadMessages();
+
+          // Resetar status após 3 segundos
+          setTimeout(() => {
+            statusHint.textContent = 'Campos obrigatórios: nome e mensagem.';
+            statusHint.style.color = 'var(--muted)';
+          }, 3000);
+
+        } catch (error) {
+          console.error('Erro:', error);
+          statusHint.textContent = 'Erro ao enviar mensagem. Tente novamente.';
+          statusHint.style.color = 'var(--danger)';
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Enviar Mensagem';
+        }
+      });
+
+      // Funções auxiliares
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
         });
       }
-      btn.onclick = ()=>{
-        const name=(inputName.value||'').trim();
-        const text=(inputMsg.value||'').trim();
-        if(!name||!text){ statusHint.textContent='Preencha nome e mensagem ❤️'; statusHint.style.color='var(--danger)'; return; }
-        const data=load(); if(data.length>500) data.shift();
-        data.push({name,text,when:Date.now()}); save(data);
-        inputMsg.value=''; statusHint.textContent='Mensagem enviada! 💌'; statusHint.style.color='var(--acc2)'; render();
-      };
-      render();
-    }
+
+      // Inicializar
+      loadMessages();
+    })();
 
     // ====== MÚSICA LOCAL (niver.mp4) ======
     const audio   = document.getElementById('bgAudio');
