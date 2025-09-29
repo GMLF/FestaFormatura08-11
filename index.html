@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
+    /* --- estilos originais --- */
     :root {
       --bg:#0b0b12; --card:#12121a; --muted:#a1a1b0; --text:#f6f7fb; --acc:#7c5cff; --acc2:#46d3a2; --danger:#ff6b6b;
       --radius:18px;
@@ -23,12 +24,10 @@
     a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
     .container{max-width:1000px;margin:0 auto;padding:24px}
     header{position:sticky;top:0;background:rgba(11,11,18,.7);backdrop-filter:blur(10px);z-index:20;border-bottom:1px solid #1e1e2b}
-
     .pill{display:inline-flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a26;border:1px solid #24243a;border-radius:12px}
     .btn{background:var(--acc);color:#fff;padding:12px 16px;border-radius:12px;border:none;font-weight:600;cursor:pointer}
     .btn.ghost{background:#1a1a26}
     .btn:disabled{background:#34344d;color:#a1a1b0;cursor:not-allowed}
-
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 0}
     .card{background:var(--card);border:1px solid #1e1e2b;padding:22px;border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.25)}
     .tag{display:inline-flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 10px;border-radius:999px;color:var(--muted);font-size:12px}
@@ -40,67 +39,33 @@
     .map{width:100%;height:320px;border:0;border-radius:16px}
     .small{font-size:13px}
     .muted{color:var(--muted)}
-
-    /* NAV responsiva */
+    /* nav responsiva */
     .nav{display:flex;gap:12px;align-items:center;justify-content:space-between;position:relative}
-    .menu-toggle{
-      display:none;background:#1a1a26;color:#f6f7fb;border:1px solid #24243a;
-      padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;
-    }
+    .menu-toggle{display:none;background:#1a1a26;color:#f6f7fb;border:1px solid #24243a;
+      padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;}
     .nav-menu{display:flex;gap:6px;align-items:center}
     .nav-menu a{padding:10px 14px;border-radius:10px;display:inline-block}
     @media (max-width:820px){
-      .nav-menu{
-        position:absolute;top:64px;right:12px;left:12px;
-        background:rgba(11,11,18,.92);backdrop-filter:blur(8px);
-        border:1px solid #24243a;border-radius:12px;padding:10px;
-        display:none;flex-direction:column;gap:4px;z-index:25;
-      }
+      .nav-menu{position:absolute;top:64px;right:12px;left:12px;background:rgba(11,11,18,.92);backdrop-filter:blur(8px);
+        border:1px solid #24243a;border-radius:12px;padding:10px;display:none;flex-direction:column;gap:4px;z-index:25;}
       .nav-menu.open{display:flex}
       .menu-toggle{display:inline-flex;align-items:center;gap:8px}
     }
-
-    /* Slideshow */
-    .slideshow{
-      position:relative;height:520px;border-radius:16px;overflow:hidden;border:1px solid #24243a;background:#0f0f17;
-    }
-    .slideshow img{
-      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#0f0f17;
-      opacity:0;transition:opacity .8s ease
-    }
+    /* slideshow */
+    .slideshow{position:relative;height:520px;border-radius:16px;overflow:hidden;border:1px solid #24243a;background:#0f0f17}
+    .slideshow img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#0f0f17;opacity:0;transition:opacity .8s ease}
     .slideshow img.active{opacity:1}
-
-    /* Mural / formulário */
-    .field{display:flex;flex-direction:column;gap:6px}
-    .input,.textarea{padding:12px 14px;border-radius:12px;border:1px solid #34344d;background:#12121a;color:#eaeaf7}
-    .textarea{min-height:120px;resize:none;line-height:1.5}
-    .row{display:grid;grid-template-columns:1fr 170px;gap:8px;align-items:center}
-    .hintline{display:flex;justify-content:space-between;align-items:center}
-    .counter{color:var(--muted);font-variant-numeric:tabular-nums}
-    .msg-card{border:1px solid #24243a;background:#1a1a26;border-radius:12px;padding:12px 14px;margin-bottom:12px}
-    .msg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-    .name{font-weight:700}
-    .date{color:var(--muted);font-size:12px}
-    .loading{text-align:center;padding:20px;color:var(--muted)}
-    .error{background:var(--danger);color:#fff;padding:10px;border-radius:8px;margin:10px 0}
-
-    /* Música */
-    .music-ctrl{
-      position:fixed;right:16px;bottom:16px;display:flex;gap:8px;align-items:center;
-      background:#1a1a26;border:1px solid #24243a;color:#eaeaf7;padding:10px 12px;border-radius:12px;z-index:30;box-shadow:0 8px 20px rgba(0,0,0,.35)
-    }
+    /* música */
+    .music-ctrl{position:fixed;right:16px;bottom:16px;display:flex;gap:8px;align-items:center;
+      background:#1a1a26;border:1px solid #24243a;color:#eaeaf7;padding:10px 12px;border-radius:12px;z-index:30;box-shadow:0 8px 20px rgba(0,0,0,.35)}
     .music-ctrl button{background:var(--acc);color:#fff;border:none;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
-    .nudge{
-      position:fixed;inset:auto 0 0 0;margin:auto;bottom:0;width:100%;max-width:460px;transform:translateY(120%);
-      left:0;right:0;background:#1a1a26;color:#eaeaf7;border:1px solid #24243a;padding:10px 14px;border-radius:12px 12px 0 0;z-index:29;text-align:center;transition:transform .4s ease
-    }
+    .nudge{position:fixed;inset:auto 0 0 0;margin:auto;bottom:0;width:100%;max-width:460px;transform:translateY(120%);
+      left:0;right:0;background:#1a1a26;color:#eaeaf7;border:1px solid #24243a;padding:10px 14px;border-radius:12px 12px 0 0;z-index:29;text-align:center;transition:transform .4s ease}
     .nudge.show{transform:translateY(0)}
-
     @media (max-width:960px){
       .hero{grid-template-columns:1fr}
       .two{grid-template-columns:1fr}
       .slideshow{height:360px}
-      .row{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -113,7 +78,6 @@
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navMenu">☰ Menu</button>
       <nav id="navMenu" class="nav-menu">
         <a href="#rsvp">RSVP</a>
-        <a href="#mural">Mural</a>
         <a href="#local">Local</a>
       </nav>
     </div>
@@ -128,7 +92,6 @@
         <p>Vem comemorar o aniversário de <strong id="name">Giovana de Aquino Magalhães</strong> com a gente! Será no dia <strong id="date">8 de novembro de 2025</strong>, às <strong id="time">20:00</strong>.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
           <button class="btn" onclick="document.querySelector('#rsvp').scrollIntoView({behavior:'smooth'})">Confirmar presença</button>
-          <button class="btn ghost" onclick="document.querySelector('#mural').scrollIntoView({behavior:'smooth'})">Deixar mensagem</button>
         </div>
         <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
           <span class="muted">Faltam:</span>
@@ -145,37 +108,6 @@
       <h2>📨 Confirmação de Presença (RSVP)</h2>
       <div style="aspect-ratio:16/10;background:#0f0f17;border:1px solid #24243a;border-radius:16px;overflow:hidden">
         <iframe title="RSVP" src="https://docs.google.com/forms/d/e/1FAIpQLSd-placeholder/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>
-      </div>
-    </section>
-
-    <!-- MURAL GOOGLE SHEETS -->
-    <section id="mural" class="card" style="margin-top:20px">
-      <h2>💌 Mural de Mensagens</h2>
-      <p class="small muted" style="margin-top:-6px">
-        Deixe sua mensagem para a aniversariante! Todas as mensagens são salvas em uma planilha do Google.
-      </p>
-
-      <!-- Lista de mensagens -->
-      <div id="messagesContainer">
-        <div class="loading" id="loadingMessages">Carregando mensagens...</div>
-      </div>
-
-      <!-- Formulário -->
-      <div class="field" style="margin-top:20px">
-        <label for="messageName" class="small muted">Seu nome *</label>
-        <input id="messageName" class="input" placeholder="Ex.: Ana Souza" maxlength="80" />
-      </div>
-      <div class="field">
-        <label for="messageText" class="small muted">Sua mensagem *</label>
-        <textarea id="messageText" class="textarea" placeholder="Escreva sua mensagem de felicitações..." maxlength="800"></textarea>
-        <div class="hintline">
-          <span class="small muted" id="statusHint">Campos obrigatórios: nome e mensagem.</span>
-          <span class="counter" id="msgCounter">0/800</span>
-        </div>
-      </div>
-      <div class="row">
-        <div></div>
-        <button class="btn" id="sendMessage" disabled>Enviar Mensagem</button>
       </div>
     </section>
 
@@ -197,7 +129,6 @@
       <div class="card">
         <h2>📸 Galeria</h2>
         <div class="slideshow" id="slideshow"></div>
-        <p class="small muted" style="margin-top:8px"></p>
       </div>
     </section>
 
@@ -216,10 +147,8 @@
     </section>
   </main>
 
-  <!-- Áudio local (se o arquivo for .mp4, troque o src) -->
+  <!-- Áudio -->
   <audio id="bgAudio" src="niver.m4a" preload="auto" loop></audio>
-
-  <!-- Controle de música -->
   <div class="music-ctrl" id="musicCtrl" style="display:none">
     <span id="musicState" class="small muted">carregando música…</span>
     <button id="musicToggle" type="button">🔊 Tocar</button>
@@ -227,44 +156,24 @@
   <div id="audioNudge" class="nudge">🔈 Toque em qualquer lugar para ativar o som</div>
 
   <script>
-    // ====== CONFIG BÁSICA ======
     const NAME = 'Giovana de Aquino Magalhães';
     const EVENT_DATE = new Date('2025-11-08T20:00:00-03:00');
     const ADDRESS = 'Av José Pereira de Andrade, 370 - Jardim Santa Maria, Jacareí - SP';
 
-    // === GOOGLE SHEETS WEB APP (use o seu URL de deploy aqui) ===
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbydFu5qe1NMEaa_YXMvx-yHIN12GdyrzCVa_-wur8uuBW58ZwCkSG-CWcNMCZk-z05aUw/exec';
-
-    // === GALERIA (58 fotos /img/1.jpg ... /img/58.jpg) ===
-    const NUM_FOTOS = 58;
-    const GALLERY = Array.from({length: NUM_FOTOS}, (_, i) => `img/${i+1}.jpg`);
-    const SLIDE_INTERVAL_MS = 3000;
-
-    // ====== NAVBAR MOBILE ======
+    // ====== NAV ======
     (function navMobile(){
       const btn = document.getElementById('menuToggle');
       const menu = document.getElementById('navMenu');
       if(!btn || !menu) return;
-      btn.addEventListener('click', ()=>{
-        menu.classList.toggle('open');
-        btn.setAttribute('aria-expanded', menu.classList.contains('open') ? 'true' : 'false');
-      });
-      document.addEventListener('click', (ev)=>{
-        if(!menu.classList.contains('open')) return;
-        if(!menu.contains(ev.target) && ev.target !== btn){
-          menu.classList.remove('open');
-          btn.setAttribute('aria-expanded','false');
-        }
-      });
-      menu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> menu.classList.remove('open')));
+      btn.addEventListener('click', ()=> menu.classList.toggle('open'));
     })();
 
-    // ====== TEXTO BASE ======
+    // ====== TEXTOS ======
     document.getElementById('owner').textContent = NAME;
     document.getElementById('name').textContent = NAME;
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('date').textContent = EVENT_DATE.toLocaleDateString('pt-BR', { dateStyle:'long' });
-    document.getElementById('time').textContent = EVENT_DATE.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+    document.getElementById('date').textContent = EVENT_DATE.toLocaleDateString('pt-BR',{dateStyle:'long'});
+    document.getElementById('time').textContent = EVENT_DATE.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
     // ====== COUNTDOWN ======
     (function tick(){
@@ -286,185 +195,31 @@
       const q = encodeURIComponent(ADDRESS);
       link.href = `https://www.google.com/maps?q=${q}`;
       frame.src = `https://www.google.com/maps?q=${q}&output=embed`;
-      document.getElementById('addrText').innerHTML = `<strong>Espaço da Festa</strong><br/>${ADDRESS}`;
     })();
 
     // ====== GALERIA ======
     (function initSlideshow(){
       const box = document.getElementById('slideshow');
-      if(!box) return;
-      let idx = 0;
-      const slides = [];
+      const NUM_FOTOS = 58;
+      const GALLERY = Array.from({length:NUM_FOTOS},(_,i)=>`img/${i+1}.jpg`);
+      let idx=0, slides=[];
       function show(i){ slides.forEach((img,k)=> img.classList.toggle('active', k===i)); }
-      const first = new Image();
-      first.src = GALLERY[0]; first.alt='Foto 1'; first.loading='eager';
-      first.onload = ()=>{
-        first.classList.add('active'); box.appendChild(first); slides.push(first);
-        for(let i=1;i<GALLERY.length;i++){
-          const img = new Image(); img.src = GALLERY[i]; img.alt = `Foto ${i+1}`; img.loading='lazy';
-          box.appendChild(img); slides.push(img);
-        }
-        setInterval(()=>{ idx=(idx+1)%slides.length; show(idx); }, SLIDE_INTERVAL_MS);
+      const first=new Image();
+      first.src=GALLERY[0]; first.onload=()=>{first.classList.add('active');box.appendChild(first);slides.push(first);
+        for(let i=1;i<GALLERY.length;i++){ const img=new Image(); img.src=GALLERY[i]; box.appendChild(img); slides.push(img); }
+        setInterval(()=>{ idx=(idx+1)%slides.length; show(idx); },3000);
       };
-      first.onerror = ()=> box.appendChild(first);
     })();
 
-    // ====== MURAL GOOGLE SHEETS ======
-    (function initMural(){
-      const container = document.getElementById('messagesContainer');
-      const loadingEl = document.getElementById('loadingMessages');
-      const nameInput = document.getElementById('messageName');
-      const textInput = document.getElementById('messageText');
-      const counterEl = document.getElementById('msgCounter');
-      const sendBtn = document.getElementById('sendMessage');
-      const statusHint = document.getElementById('statusHint');
-      const MAX = 800;
-
-      // Auto-expand do textarea + contador + validação
-      function autoGrow(el){
-        el.style.height = 'auto';
-        el.style.height = Math.min(el.scrollHeight, 400) + 'px';
-      }
-      function validate(){
-        const nameOk = nameInput.value.trim().length > 0;
-        const msg = textInput.value;
-        counterEl.textContent = `${msg.length}/${MAX}`;
-        autoGrow(textInput);
-        const msgOk = msg.trim().length > 0 && msg.length <= MAX;
-        sendBtn.disabled = !(nameOk && msgOk);
-      }
-      nameInput.addEventListener('input', validate);
-      textInput.addEventListener('input', validate);
-      textInput.addEventListener('input', ()=>autoGrow(textInput));
-      textInput.addEventListener('keydown', (e)=>{
-        if((e.ctrlKey || e.metaKey) && e.key === 'Enter' && !sendBtn.disabled){
-          sendBtn.click();
-        }
-      });
-      // estado inicial
-      autoGrow(textInput); validate();
-
-      // Carregar mensagens
-      async function loadMessages(){
-        try{
-          loadingEl.textContent = 'Carregando mensagens...';
-          loadingEl.style.display = 'block';
-          const url = `${GOOGLE_SCRIPT_URL}?action=getMessages&t=${Date.now()}`;
-          const resp = await fetch(url, { method:'GET', mode:'cors', cache:'no-cache' });
-          if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
-          const result = await resp.json();
-          if(result.error) throw new Error(result.error);
-          const messages = Array.isArray(result) ? result : [];
-          if(messages.length === 0){
-            container.innerHTML = '<p class="muted">📝 Nenhuma mensagem ainda. Seja o primeiro a deixar uma mensagem!</p>';
-            return;
-          }
-          messages.sort((a,b)=> new Date(b.timestamp) - new Date(a.timestamp));
-          container.innerHTML = messages.map(msg => `
-            <div class="msg-card">
-              <div class="msg-header">
-                <span class="name">${escapeHtml(msg.name || 'Anônimo')}</span>
-                <span class="date">${formatDate(msg.timestamp)}</span>
-              </div>
-              <div>${escapeHtml(msg.message)}</div>
-            </div>
-          `).join('');
-        }catch(err){
-          container.innerHTML = `
-            <div class="error">
-              ❌ Erro ao carregar mensagens: ${err.message}
-              <br><br><button onclick="location.reload()" class="btn" style="margin-top:10px">🔄 Tentar Novamente</button>
-            </div>`;
-        }finally{
-          loadingEl.style.display = 'none';
-        }
-      }
-
-      // Enviar mensagem (POST simples, sem preflight)
-      sendBtn.addEventListener('click', async ()=>{
-        const name = nameInput.value.trim();
-        const message = textInput.value.trim();
-        if(!name || !message){ statusHint.textContent='Preencha nome e mensagem ❤️'; statusHint.style.color='var(--danger)'; return; }
-        try{
-          sendBtn.disabled = true; sendBtn.textContent = 'Enviando...';
-          statusHint.textContent = 'Enviando mensagem...'; statusHint.style.color = 'var(--muted)';
-
-          const resp = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita preflight
-            body: JSON.stringify({ action:'addMessage', name, message })
-          });
-          const result = await resp.json();
-          if(!resp.ok || result.error) throw new Error(result.error || `Erro ${resp.status}`);
-
-          nameInput.value = ''; textInput.value = ''; validate();
-          statusHint.textContent = '✅ Mensagem enviada com sucesso! 💌';
-          statusHint.style.color = 'var(--acc2)';
-
-          setTimeout(loadMessages, 800);
-          setTimeout(()=>{ statusHint.textContent='Campos obrigatórios: nome e mensagem.'; statusHint.style.color='var(--muted)'; sendBtn.textContent='Enviar Mensagem'; }, 4000);
-        }catch(err){
-          statusHint.textContent = `❌ Erro: ${err.message}`;
-          statusHint.style.color = 'var(--danger)';
-          sendBtn.disabled = false; sendBtn.textContent = 'Enviar Mensagem';
-          setTimeout(()=>{ statusHint.textContent='Campos obrigatórios: nome e mensagem.'; statusHint.style.color='var(--muted)'; }, 4000);
-        }
-      });
-
-      function escapeHtml(t){ if(!t) return ''; const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
-      function formatDate(ts){
-        try{ const d=new Date(ts);
-          return d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-        }catch(_){ return 'Data inválida'; }
-      }
-
-      loadMessages();
-    })();
-
-    // ====== MÚSICA LOCAL (niver.m4a/mp4) ======
-    const audio = document.getElementById('bgAudio');
-    const ctrl = document.getElementById('musicCtrl');
-    const btnPlay = document.getElementById('musicToggle');
-    const label = document.getElementById('musicState');
-    const nudge = document.getElementById('audioNudge');
-
-    async function initAudio(){
-      try{
-        audio.volume = 1.0;
-        audio.muted = true;
-        await audio.play();
-        ctrl.style.display='flex';
-        label.textContent='🔇 mudo — toque para ativar';
-        btnPlay.textContent='🔊 Tocar';
-        showNudge();
-      }catch{
-        ctrl.style.display='flex';
-        label.textContent='🔇 bloqueado — toque para ativar';
-        btnPlay.textContent='🔊 Tocar';
-        showNudge();
-      }
-    }
+    // ====== ÁUDIO ======
+    const audio=document.getElementById('bgAudio');
+    const ctrl=document.getElementById('musicCtrl');
+    const btn=document.getElementById('musicToggle');
+    const label=document.getElementById('musicState');
+    const nudge=document.getElementById('audioNudge');
+    async function initAudio(){ try{audio.muted=true; await audio.play(); ctrl.style.display='flex'; label.textContent='🔇 bloqueado — toque para ativar';}catch{ctrl.style.display='flex';} }
     initAudio();
-
-    ['pointerdown','touchstart','keydown'].forEach(ev=>{
-      window.addEventListener(ev, oneTimeUnlock, { once:true, passive:true });
-    });
-    function oneTimeUnlock(){
-      try{
-        audio.muted=false; audio.play();
-        label.textContent='🎵 tocando'; btnPlay.textContent='⏸ Pausar'; hideNudge();
-      }catch{}
-    }
-    btnPlay.addEventListener('click', ()=>{
-      if(audio.paused){
-        audio.muted=false;
-        audio.play().then(()=>{ label.textContent='🎵 tocando'; btnPlay.textContent='⏸ Pausar'; hideNudge(); });
-      }else{
-        audio.pause(); label.textContent='🔇 pausado'; btnPlay.textContent='🔊 Tocar';
-      }
-    });
-    function showNudge(){ nudge.classList.add('show'); }
-    function hideNudge(){ nudge.classList.remove('show'); }
+    btn.addEventListener('click',()=>{ if(audio.paused){audio.muted=false;audio.play();label.textContent='🎵 tocando';btn.textContent='⏸ Pausar';} else {audio.pause();label.textContent='🔇 pausado';btn.textContent='🔊 Tocar';} });
   </script>
 </body>
 </html>
