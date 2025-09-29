@@ -10,24 +10,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0b12; --card:#12121a; --muted:#a1a1b0; --text:#f6f7fb; --acc:#7c5cff; --acc2:#46d3a2; --danger:#ff6b6b;
-      --radius: 18px;
+      --bg:#0b0b12; --card:#12121a; --muted:#a1a1b0; --text:#f6f7fb; --acc:#7c5cff; --acc2:#46d3a2; --danger:#ff6b6b;
+      --radius:18px;
     }
     *{box-sizing:border-box}
     html,body{
-      margin:0;
-      padding:0;
+      margin:0;padding:0;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-      background: url("niver.jpg") repeat fixed;
-      background-size: contain;
-      color:var(--text)
+      background:url("niver.jpg") repeat fixed;
+      background-size:contain;color:var(--text)
     }
     a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
     .container{max-width:1000px;margin:0 auto;padding:24px}
     header{position:sticky;top:0;background:rgba(11,11,18,.7);backdrop-filter:blur(10px);z-index:20;border-bottom:1px solid #1e1e2b}
 
     .pill{display:inline-flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a26;border:1px solid #24243a;border-radius:12px}
-    .btn{background:var(--acc);color:white;padding:12px 16px;border-radius:12px;border:none;font-weight:600;cursor:pointer}
+    .btn{background:var(--acc);color:#fff;padding:12px 16px;border-radius:12px;border:none;font-weight:600;cursor:pointer}
     .btn.ghost{background:#1a1a26}
     .btn:disabled{background:#34344d;color:#a1a1b0;cursor:not-allowed}
 
@@ -44,82 +42,61 @@
     .muted{color:var(--muted)}
 
     /* NAV responsiva */
-    .nav{display:flex;gap:12px;align-items:center;justify-content:space-between; position:relative}
+    .nav{display:flex;gap:12px;align-items:center;justify-content:space-between;position:relative}
     .menu-toggle{
-      display:none;
-      background:#1a1a26; color:#f6f7fb; border:1px solid #24243a;
-      padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer;
+      display:none;background:#1a1a26;color:#f6f7fb;border:1px solid #24243a;
+      padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;
     }
-    .nav-menu{ display:flex; gap:6px; align-items:center; }
-    .nav-menu a{ padding:10px 14px; border-radius:10px; display:inline-block; }
-
-    @media (max-width: 820px){
+    .nav-menu{display:flex;gap:6px;align-items:center}
+    .nav-menu a{padding:10px 14px;border-radius:10px;display:inline-block}
+    @media (max-width:820px){
       .nav-menu{
-        position:absolute; top:64px; right:12px; left:12px;
-        background:rgba(11,11,18,.92); backdrop-filter:blur(8px);
-        border:1px solid #24243a; border-radius:12px; padding:10px;
-        display:none; flex-direction:column; gap:4px; z-index:25;
+        position:absolute;top:64px;right:12px;left:12px;
+        background:rgba(11,11,18,.92);backdrop-filter:blur(8px);
+        border:1px solid #24243a;border-radius:12px;padding:10px;
+        display:none;flex-direction:column;gap:4px;z-index:25;
       }
-      .nav-menu.open{ display:flex; }
-      .menu-toggle{ display:inline-flex; align-items:center; gap:8px; }
+      .nav-menu.open{display:flex}
+      .menu-toggle{display:inline-flex;align-items:center;gap:8px}
     }
 
-    /* Slideshow — aumentado e sem corte */
+    /* Slideshow */
     .slideshow{
-      position:relative;
-      height:520px;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid #24243a;
-      background:#0f0f17;
+      position:relative;height:520px;border-radius:16px;overflow:hidden;border:1px solid #24243a;background:#0f0f17;
     }
     .slideshow img{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:contain;
-      background:#0f0f17;
-      opacity:0; transition:opacity .8s ease;
+      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#0f0f17;
+      opacity:0;transition:opacity .8s ease
     }
     .slideshow img.active{opacity:1}
 
-    /* Mural Google Sheets */
+    /* Mural / formulário */
     .field{display:flex;flex-direction:column;gap:6px}
-    .input, .textarea{
-      padding:12px 14px;border-radius:12px;border:1px solid #34344d;background:#12121a;color:#eaeaf7
-    }
-    .textarea{min-height:90px;resize:vertical}
-    .row{display:grid;grid-template-columns:1fr 150px;gap:8px}
+    .input,.textarea{padding:12px 14px;border-radius:12px;border:1px solid #34344d;background:#12121a;color:#eaeaf7}
+    .textarea{min-height:120px;resize:none;line-height:1.5}
+    .row{display:grid;grid-template-columns:1fr 170px;gap:8px;align-items:center}
+    .hintline{display:flex;justify-content:space-between;align-items:center}
+    .counter{color:var(--muted);font-variant-numeric:tabular-nums}
     .msg-card{border:1px solid #24243a;background:#1a1a26;border-radius:12px;padding:12px 14px;margin-bottom:12px}
     .msg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
     .name{font-weight:700}
     .date{color:var(--muted);font-size:12px}
     .loading{text-align:center;padding:20px;color:var(--muted)}
-    .error{background:var(--danger);color:white;padding:10px;border-radius:8px;margin:10px 0}
+    .error{background:var(--danger);color:#fff;padding:10px;border-radius:8px;margin:10px 0}
 
-    /* Controle de música + nudge */
+    /* Música */
     .music-ctrl{
-      position:fixed; right:16px; bottom:16px;
-      display:flex; gap:8px; align-items:center;
-      background:#1a1a26; border:1px solid #24243a; color:#eaeaf7;
-      padding:10px 12px; border-radius:12px; z-index:30;
-      box-shadow:0 8px 20px rgba(0,0,0,.35);
+      position:fixed;right:16px;bottom:16px;display:flex;gap:8px;align-items:center;
+      background:#1a1a26;border:1px solid #24243a;color:#eaeaf7;padding:10px 12px;border-radius:12px;z-index:30;box-shadow:0 8px 20px rgba(0,0,0,.35)
     }
-    .music-ctrl button{
-      background:var(--acc); color:white; border:none; border-radius:10px;
-      padding:8px 12px; font-weight:700; cursor:pointer;
-    }
+    .music-ctrl button{background:var(--acc);color:#fff;border:none;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
     .nudge{
-      position:fixed; inset:auto 0 0 0; margin:auto; bottom:0;
-      width:100%; max-width:460px;
-      transform:translateY(120%);
-      left:0; right:0;
-      background:#1a1a26; color:#eaeaf7; border:1px solid #24243a;
-      padding:10px 14px; border-radius:12px 12px 0 0; z-index:29;
-      text-align:center; transition:transform .4s ease;
+      position:fixed;inset:auto 0 0 0;margin:auto;bottom:0;width:100%;max-width:460px;transform:translateY(120%);
+      left:0;right:0;background:#1a1a26;color:#eaeaf7;border:1px solid #24243a;padding:10px 14px;border-radius:12px 12px 0 0;z-index:29;text-align:center;transition:transform .4s ease
     }
-    .nudge.show{ transform:translateY(0); }
+    .nudge.show{transform:translateY(0)}
 
-    @media (max-width: 960px){
+    @media (max-width:960px){
       .hero{grid-template-columns:1fr}
       .two{grid-template-columns:1fr}
       .slideshow{height:360px}
@@ -133,11 +110,7 @@
       <div style="display:flex;gap:12px;align-items:center">
         <span class="pill">🎉 <strong>Aniver da <span id="owner">Giovana de Aquino Magalhães</span></strong></span>
       </div>
-
-      <!-- Botão hamburguer (mobile) -->
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navMenu">☰ Menu</button>
-
-      <!-- Links de navegação -->
       <nav id="navMenu" class="nav-menu">
         <a href="#rsvp">RSVP</a>
         <a href="#mural">Mural</a>
@@ -182,12 +155,12 @@
         Deixe sua mensagem para a aniversariante! Todas as mensagens são salvas em uma planilha do Google.
       </p>
 
-      <!-- Área de mensagens -->
+      <!-- Lista de mensagens -->
       <div id="messagesContainer">
         <div class="loading" id="loadingMessages">Carregando mensagens...</div>
       </div>
 
-      <!-- Formulário de envio -->
+      <!-- Formulário -->
       <div class="field" style="margin-top:20px">
         <label for="messageName" class="small muted">Seu nome *</label>
         <input id="messageName" class="input" placeholder="Ex.: Ana Souza" maxlength="80" />
@@ -195,9 +168,13 @@
       <div class="field">
         <label for="messageText" class="small muted">Sua mensagem *</label>
         <textarea id="messageText" class="textarea" placeholder="Escreva sua mensagem de felicitações..." maxlength="800"></textarea>
+        <div class="hintline">
+          <span class="small muted" id="statusHint">Campos obrigatórios: nome e mensagem.</span>
+          <span class="counter" id="msgCounter">0/800</span>
+        </div>
       </div>
       <div class="row">
-        <span class="small muted" id="statusHint">Campos obrigatórios: nome e mensagem.</span>
+        <div></div>
         <button class="btn" id="sendMessage" disabled>Enviar Mensagem</button>
       </div>
     </section>
@@ -228,18 +205,9 @@
     <section style="margin-top:20px" id="faq">
       <div class="card">
         <h2>❓ Dúvidas Frequentes</h2>
-        <details>
-          <summary>Posso levar acompanhante?</summary>
-          <p class="muted">Claro! Só lembra de informar no RSVP.</p>
-        </details>
-        <details>
-          <summary>Terá estacionamento?</summary>
-          <p class="muted">Há vagas livres nas ruas próximas.</p>
-        </details>
-        <details>
-          <summary>Qual o traje?</summary>
-          <p class="muted">Esporte fino.</p>
-        </details>
+        <details><summary>Posso levar acompanhante?</summary><p class="muted">Claro! Só lembra de informar no RSVP.</p></details>
+        <details><summary>Terá estacionamento?</summary><p class="muted">Há vagas livres nas ruas próximas.</p></details>
+        <details><summary>Qual o traje?</summary><p class="muted">Esporte fino.</p></details>
       </div>
     </section>
 
@@ -248,15 +216,14 @@
     </section>
   </main>
 
-  <!-- Áudio local oculto -->
+  <!-- Áudio local (se o arquivo for .mp4, troque o src) -->
   <audio id="bgAudio" src="niver.m4a" preload="auto" loop></audio>
 
-  <!-- Controle de música (flutuante) -->
+  <!-- Controle de música -->
   <div class="music-ctrl" id="musicCtrl" style="display:none">
     <span id="musicState" class="small muted">carregando música…</span>
     <button id="musicToggle" type="button">🔊 Tocar</button>
   </div>
-  <!-- "Nudge" sutil para liberar áudio quando bloqueado -->
   <div id="audioNudge" class="nudge">🔈 Toque em qualquer lugar para ativar o som</div>
 
   <script>
@@ -265,11 +232,10 @@
     const EVENT_DATE = new Date('2025-11-08T20:00:00-03:00');
     const ADDRESS = 'Av José Pereira de Andrade, 370 - Jardim Santa Maria, Jacareí - SP';
 
-    // === CONFIGURAÇÃO GOOGLE SHEETS ===
-    // URL do Web App do Google Apps Script (substitua pelo seu)
+    // === GOOGLE SHEETS WEB APP (use o seu URL de deploy aqui) ===
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbydFu5qe1NMEaa_YXMvx-yHIN12GdyrzCVa_-wur8uuBW58ZwCkSG-CWcNMCZk-z05aUw/exec';
-    
-    // === GALERIA com 58 fotos ===
+
+    // === GALERIA (58 fotos /img/1.jpg ... /img/58.jpg) ===
     const NUM_FOTOS = 58;
     const GALLERY = Array.from({length: NUM_FOTOS}, (_, i) => `img/${i+1}.jpg`);
     const SLIDE_INTERVAL_MS = 3000;
@@ -281,13 +247,16 @@
       if(!btn || !menu) return;
       btn.addEventListener('click', ()=>{
         menu.classList.toggle('open');
-        const open = menu.classList.contains('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-expanded', menu.classList.contains('open') ? 'true' : 'false');
       });
-      // fecha ao clicar num link
-      menu.querySelectorAll('a').forEach(a=>{
-        a.addEventListener('click', ()=> menu.classList.remove('open'));
+      document.addEventListener('click', (ev)=>{
+        if(!menu.classList.contains('open')) return;
+        if(!menu.contains(ev.target) && ev.target !== btn){
+          menu.classList.remove('open');
+          btn.setAttribute('aria-expanded','false');
+        }
       });
+      menu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> menu.classList.remove('open')));
     })();
 
     // ====== TEXTO BASE ======
@@ -298,8 +267,8 @@
     document.getElementById('time').textContent = EVENT_DATE.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
 
     // ====== COUNTDOWN ======
-    const cEl = document.getElementById('countdown');
-    function tick(){
+    (function tick(){
+      const cEl = document.getElementById('countdown');
       const now = new Date();
       const ms = EVENT_DATE - now;
       if(ms <= 0){ cEl.textContent = 'É hoje! 🎉'; return; }
@@ -308,8 +277,7 @@
       const m = Math.floor((ms%3600000)/60000);
       cEl.textContent = `${d}d ${h}h ${m}m`;
       setTimeout(tick, 1000);
-    }
-    tick();
+    })();
 
     // ====== MAPS ======
     (function setupMaps(){
@@ -318,8 +286,7 @@
       const q = encodeURIComponent(ADDRESS);
       link.href = `https://www.google.com/maps?q=${q}`;
       frame.src = `https://www.google.com/maps?q=${q}&output=embed`;
-      document.getElementById('addrText').innerHTML =
-        `<strong>Espaço da Festa</strong><br/>${ADDRESS}`;
+      document.getElementById('addrText').innerHTML = `<strong>Espaço da Festa</strong><br/>${ADDRESS}`;
     })();
 
     // ====== GALERIA ======
@@ -328,18 +295,18 @@
       if(!box) return;
       let idx = 0;
       const slides = [];
-      function show(i){ slides.forEach((img, k)=> img.classList.toggle('active', k === i)); }
+      function show(i){ slides.forEach((img,k)=> img.classList.toggle('active', k===i)); }
       const first = new Image();
-      first.src = GALLERY[0]; first.alt = 'Foto 1'; first.loading = 'eager';
-      first.onload = () => {
+      first.src = GALLERY[0]; first.alt='Foto 1'; first.loading='eager';
+      first.onload = ()=>{
         first.classList.add('active'); box.appendChild(first); slides.push(first);
         for(let i=1;i<GALLERY.length;i++){
-          const img = new Image(); img.src = GALLERY[i]; img.alt = `Foto ${i+1}`; img.loading = 'lazy';
+          const img = new Image(); img.src = GALLERY[i]; img.alt = `Foto ${i+1}`; img.loading='lazy';
           box.appendChild(img); slides.push(img);
         }
-        setInterval(()=>{ idx = (idx + 1) % slides.length; show(idx); }, SLIDE_INTERVAL_MS);
+        setInterval(()=>{ idx=(idx+1)%slides.length; show(idx); }, SLIDE_INTERVAL_MS);
       };
-      first.onerror = () => { box.appendChild(first); };
+      first.onerror = ()=> box.appendChild(first);
     })();
 
     // ====== MURAL GOOGLE SHEETS ======
@@ -348,63 +315,51 @@
       const loadingEl = document.getElementById('loadingMessages');
       const nameInput = document.getElementById('messageName');
       const textInput = document.getElementById('messageText');
+      const counterEl = document.getElementById('msgCounter');
       const sendBtn = document.getElementById('sendMessage');
       const statusHint = document.getElementById('statusHint');
+      const MAX = 800;
 
-      // ⚠️ NOVO URL DO WEB APP
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbydFu5qe1NMEaa_YXMvx-yHIN12GdyrzCVa_-wur8uuBW58ZwCkSG-CWcNMCZk-z05aUw/exec';
-
-      // Validação do formulário
-      function validateForm() {
-        const nameValid = nameInput.value.trim().length > 0;
-        const textValid = textInput.value.trim().length > 0;
-        sendBtn.disabled = !(nameValid && textValid);
+      // Auto-expand do textarea + contador + validação
+      function autoGrow(el){
+        el.style.height = 'auto';
+        el.style.height = Math.min(el.scrollHeight, 400) + 'px';
       }
+      function validate(){
+        const nameOk = nameInput.value.trim().length > 0;
+        const msg = textInput.value;
+        counterEl.textContent = `${msg.length}/${MAX}`;
+        autoGrow(textInput);
+        const msgOk = msg.trim().length > 0 && msg.length <= MAX;
+        sendBtn.disabled = !(nameOk && msgOk);
+      }
+      nameInput.addEventListener('input', validate);
+      textInput.addEventListener('input', validate);
+      textInput.addEventListener('input', ()=>autoGrow(textInput));
+      textInput.addEventListener('keydown', (e)=>{
+        if((e.ctrlKey || e.metaKey) && e.key === 'Enter' && !sendBtn.disabled){
+          sendBtn.click();
+        }
+      });
+      // estado inicial
+      autoGrow(textInput); validate();
 
-      nameInput.addEventListener('input', validateForm);
-      textInput.addEventListener('input', validateForm);
-
-      // Carregar mensagens com tratamento de CORS
-      async function loadMessages() {
-        try {
+      // Carregar mensagens
+      async function loadMessages(){
+        try{
           loadingEl.textContent = 'Carregando mensagens...';
           loadingEl.style.display = 'block';
-          
-          console.log('Iniciando carregamento de mensagens...');
-          
-          // Adiciona timestamp para evitar cache
           const url = `${GOOGLE_SCRIPT_URL}?action=getMessages&t=${Date.now()}`;
-          console.log('URL:', url);
-          
-          const response = await fetch(url, {
-            method: 'GET',
-            mode: 'cors',
-            cache: 'no-cache'
-          });
-          
-          console.log('Response status:', response.status, response.ok);
-          
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-          
-          const result = await response.json();
-          console.log('Dados recebidos:', result);
-          
-          if (result.error) {
-            throw new Error(result.error);
-          }
-          
+          const resp = await fetch(url, { method:'GET', mode:'cors', cache:'no-cache' });
+          if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+          const result = await resp.json();
+          if(result.error) throw new Error(result.error);
           const messages = Array.isArray(result) ? result : [];
-          
-          if (messages.length === 0) {
+          if(messages.length === 0){
             container.innerHTML = '<p class="muted">📝 Nenhuma mensagem ainda. Seja o primeiro a deixar uma mensagem!</p>';
             return;
           }
-
-          // Ordenar por data (mais recentes primeiro)
-          messages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-          
+          messages.sort((a,b)=> new Date(b.timestamp) - new Date(a.timestamp));
           container.innerHTML = messages.map(msg => `
             <div class="msg-card">
               <div class="msg-header">
@@ -414,185 +369,100 @@
               <div>${escapeHtml(msg.message)}</div>
             </div>
           `).join('');
-          
-          console.log('Mensagens carregadas com sucesso:', messages.length);
-          
-        } catch (error) {
-          console.error('Erro ao carregar mensagens:', error);
+        }catch(err){
           container.innerHTML = `
             <div class="error">
-              ❌ Erro ao carregar mensagens: ${error.message}
-              <br><br>
-              <button onclick="location.reload()" class="btn" style="margin-top: 10px;">
-                🔄 Tentar Novamente
-              </button>
-            </div>
-          `;
-        } finally {
+              ❌ Erro ao carregar mensagens: ${err.message}
+              <br><br><button onclick="location.reload()" class="btn" style="margin-top:10px">🔄 Tentar Novamente</button>
+            </div>`;
+        }finally{
           loadingEl.style.display = 'none';
         }
       }
 
-      // Enviar mensagem com tratamento melhorado
-      sendBtn.addEventListener('click', async () => {
+      // Enviar mensagem (POST simples, sem preflight)
+      sendBtn.addEventListener('click', async ()=>{
         const name = nameInput.value.trim();
         const message = textInput.value.trim();
+        if(!name || !message){ statusHint.textContent='Preencha nome e mensagem ❤️'; statusHint.style.color='var(--danger)'; return; }
+        try{
+          sendBtn.disabled = true; sendBtn.textContent = 'Enviando...';
+          statusHint.textContent = 'Enviando mensagem...'; statusHint.style.color = 'var(--muted)';
 
-        if (!name || !message) {
-          statusHint.textContent = 'Preencha nome e mensagem ❤️';
-          statusHint.style.color = 'var(--danger)';
-          return;
-        }
-
-        try {
-          sendBtn.disabled = true;
-          sendBtn.textContent = 'Enviando...';
-          statusHint.textContent = 'Enviando mensagem...';
-          statusHint.style.color = 'var(--muted)';
-
-          console.log('Enviando mensagem:', { name, message });
-
-          const response = await fetch(GOOGLE_SCRIPT_URL, {
+          const resp = await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-              action: 'addMessage',
-              name: name,
-              message: message
-            })
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita preflight
+            body: JSON.stringify({ action:'addMessage', name, message })
           });
+          const result = await resp.json();
+          if(!resp.ok || result.error) throw new Error(result.error || `Erro ${resp.status}`);
 
-          console.log('Resposta do POST:', response.status, response.ok);
-
-          const result = await response.json();
-          console.log('Resultado:', result);
-
-          if (!response.ok || result.error) {
-            throw new Error(result.error || `Erro ${response.status}`);
-          }
-
-          // Limpar formulário
-          nameInput.value = '';
-          textInput.value = '';
-          sendBtn.disabled = true;
-          
+          nameInput.value = ''; textInput.value = ''; validate();
           statusHint.textContent = '✅ Mensagem enviada com sucesso! 💌';
           statusHint.style.color = 'var(--acc2)';
 
-          // Recarregar mensagens após 1 segundo
-          setTimeout(() => {
-            loadMessages();
-          }, 1000);
-
-          // Resetar status após 5 segundos
-          setTimeout(() => {
-            statusHint.textContent = 'Campos obrigatórios: nome e mensagem.';
-            statusHint.style.color = 'var(--muted)';
-            sendBtn.textContent = 'Enviar Mensagem';
-          }, 5000);
-
-        } catch (error) {
-          console.error('Erro ao enviar:', error);
-          statusHint.textContent = `❌ Erro: ${error.message}`;
+          setTimeout(loadMessages, 800);
+          setTimeout(()=>{ statusHint.textContent='Campos obrigatórios: nome e mensagem.'; statusHint.style.color='var(--muted)'; sendBtn.textContent='Enviar Mensagem'; }, 4000);
+        }catch(err){
+          statusHint.textContent = `❌ Erro: ${err.message}`;
           statusHint.style.color = 'var(--danger)';
-          sendBtn.disabled = false;
-          sendBtn.textContent = 'Enviar Mensagem';
-          
-          // Mostrar erro por 5 segundos
-          setTimeout(() => {
-            statusHint.textContent = 'Campos obrigatórios: nome e mensagem.';
-            statusHint.style.color = 'var(--muted)';
-          }, 5000);
+          sendBtn.disabled = false; sendBtn.textContent = 'Enviar Mensagem';
+          setTimeout(()=>{ statusHint.textContent='Campos obrigatórios: nome e mensagem.'; statusHint.style.color='var(--muted)'; }, 4000);
         }
       });
 
-      // Funções auxiliares
-      function escapeHtml(text) {
-        if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+      function escapeHtml(t){ if(!t) return ''; const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+      function formatDate(ts){
+        try{ const d=new Date(ts);
+          return d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+        }catch(_){ return 'Data inválida'; }
       }
 
-      function formatDate(timestamp) {
-        try {
-          const date = new Date(timestamp);
-          return date.toLocaleString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-        } catch (e) {
-          return 'Data inválida';
-        }
-      }
-
-      // Inicializar
       loadMessages();
     })();
 
-    // ====== MÚSICA LOCAL (niver.mp4) ======
-    const audio   = document.getElementById('bgAudio');
-    const ctrl    = document.getElementById('musicCtrl');
+    // ====== MÚSICA LOCAL (niver.m4a/mp4) ======
+    const audio = document.getElementById('bgAudio');
+    const ctrl = document.getElementById('musicCtrl');
     const btnPlay = document.getElementById('musicToggle');
-    const label   = document.getElementById('musicState');
-    const nudge   = document.getElementById('audioNudge');
+    const label = document.getElementById('musicState');
+    const nudge = document.getElementById('audioNudge');
 
-    // Tenta iniciar em modo mudo (permitido pelos navegadores)
     async function initAudio(){
       try{
         audio.volume = 1.0;
-        audio.muted = true;              // começa mudo para liberar autoplay
-        await audio.play();              // deve funcionar em desktop e mobile
-        ctrl.style.display = 'flex';
-        label.textContent = '🔇 mudo — toque para ativar';
-        btnPlay.textContent = '🔊 Tocar';
-        showNudge();                     // pede 1 toque para liberar som
-      }catch(e){
-        // Se até mudo for bloqueado, ainda mostramos o controle
-        ctrl.style.display = 'flex';
-        label.textContent = '🔇 bloqueado — toque para ativar';
-        btnPlay.textContent = '🔊 Tocar';
+        audio.muted = true;
+        await audio.play();
+        ctrl.style.display='flex';
+        label.textContent='🔇 mudo — toque para ativar';
+        btnPlay.textContent='🔊 Tocar';
+        showNudge();
+      }catch{
+        ctrl.style.display='flex';
+        label.textContent='🔇 bloqueado — toque para ativar';
+        btnPlay.textContent='🔊 Tocar';
         showNudge();
       }
     }
     initAudio();
 
-    // Ao primeiro gesto do usuário, desmuta e toca com som
     ['pointerdown','touchstart','keydown'].forEach(ev=>{
       window.addEventListener(ev, oneTimeUnlock, { once:true, passive:true });
     });
     function oneTimeUnlock(){
       try{
-        audio.muted = false;
-        audio.play();
-        label.textContent = '🎵 tocando';
-        btnPlay.textContent = '⏸ Pausar';
-        hideNudge();
-      }catch(_){}
+        audio.muted=false; audio.play();
+        label.textContent='🎵 tocando'; btnPlay.textContent='⏸ Pausar'; hideNudge();
+      }catch{}
     }
-
-    // Botão do controle flutuante
     btnPlay.addEventListener('click', ()=>{
       if(audio.paused){
-        audio.muted = false;
-        audio.play().then(()=>{
-          label.textContent = '🎵 tocando';
-          btnPlay.textContent = '⏸ Pausar';
-          hideNudge();
-        }).catch(()=>{ /* ignora */ });
+        audio.muted=false;
+        audio.play().then(()=>{ label.textContent='🎵 tocando'; btnPlay.textContent='⏸ Pausar'; hideNudge(); });
       }else{
-        audio.pause();
-        label.textContent = '🔇 pausado';
-        btnPlay.textContent = '🔊 Tocar';
+        audio.pause(); label.textContent='🔇 pausado'; btnPlay.textContent='🔊 Tocar';
       }
     });
-
     function showNudge(){ nudge.classList.add('show'); }
     function hideNudge(){ nudge.classList.remove('show'); }
   </script>
