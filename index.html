@@ -58,23 +58,25 @@
     .nudge{position:fixed;inset:auto 0 0 0;margin:auto;bottom:0;width:100%;max-width:460px;transform:translateY(120%);
       left:0;right:0;background:#1a1a26;color:#eaeaf7;border:1px solid #24243a;padding:10px 14px;border-radius:12px 12px 0 0;z-index:29;text-align:center;transition:transform .4s ease}
     .nudge.show{transform:translateY(0)}
-    @media (max-width:960px){
-      .hero{grid-template-columns:1fr}
-      .two{grid-template-columns:1fr}
-      .slideshow{height:360px}
-    }
-
-    /* === Altura maior para o bloco do formulário === */
+    
+    /* bloco do formulário RSVP */
     .form-box{
-      border:1px solid #24243a;border-radius:16px;overflow:hidden;background:#0f0f17;
-      height:860px;             /* desktop bem alto */
-      max-height:100vh;         /* não passa da altura da tela */
+      border:1px solid #24243a;
+      border-radius:16px;
+      overflow:hidden;
+      background:#0f0f17;
+      height:900px; /* altura padrão para desktop */
     }
-    .form-box iframe{width:100%;height:100%;display:block;border:0}
+    .form-box iframe{
+      width:100%;
+      height:100%;
+      display:block;
+      border:0;
+    }
     @media (max-width:820px){
       .form-box{
-        height:92vh;            /* no celular ocupa quase a tela inteira */
-        min-height:640px;       /* garante altura confortável */
+        height:1400px; /* altura maior em celulares */
+        min-height:1400px;
       }
     }
   </style>
@@ -116,15 +118,12 @@
     <!-- RSVP -->
     <section id="rsvp" class="card" style="margin-top:20px">
       <h2>📨 Confirmação de Presença (RSVP)</h2>
-
-      <!-- BLOCO MAIOR DO FORM -->
       <div class="form-box">
-        <iframe title="RSVP"
+        <iframe title="RSVP" 
           src="https://docs.google.com/forms/d/e/1FAIpQLSfgLXcjoNDcfrlBXAwGUNsd_dv9Ma2x0JA7YRIP27ZK5i_beQ/viewform?embedded=true">
           Carregando…
         </iframe>
       </div>
-
       <p class="small muted" style="margin-top:8px">
         Se o formulário não carregar, 
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfgLXcjoNDcfrlBXAwGUNsd_dv9Ma2x0JA7YRIP27ZK5i_beQ/viewform" target="_blank" rel="noopener">clique aqui</a>.
